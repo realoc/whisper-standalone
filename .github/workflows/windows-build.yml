@@ -1,0 +1,37 @@
+name: Build for Windows
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        
+    - name: Install dependencies
+      run: |
+        py -m pip install -U -r requirements.txt
+        
+    - name: Build executable
+      run: |
+        pyinstaller whisper_standalone.spec --clean
+        
+    - name: Rename executable with OS suffix
+      run: |
+        Rename-Item -Path "dist\whisper_standalone.exe" -NewName "whisper_standalone-windows.exe"
+        
+    - name: Create Release Asset
+      uses: softprops/action-gh-release@v1
+      if: github.ref_type == 'tag'
+      with:
+        files: dist/whisper_standalone-windows.exe
