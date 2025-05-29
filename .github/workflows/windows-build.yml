@@ -35,3 +35,4 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: dist/whisper_standalone-windows.exe
+        token: ${{ secrets.GITHUB_TOKEN }}
