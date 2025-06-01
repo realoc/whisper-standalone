@@ -48,15 +48,6 @@ jobs:
         notarize: false
         staple: false
 
-    - name: Notarize
-      uses: indygreg/apple-code-sign-action@v1
-      with:
-        input_path: dist/whisper_standalone-macos
-        app_store_connect_api_key_json_file: app_store_key.json
-        sign: false
-        notarize: true
-        staple: true
-
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
       if: github.ref_type == 'tag'
