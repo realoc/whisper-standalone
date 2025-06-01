@@ -48,7 +48,7 @@ jobs:
         notarize: false
         staple: false
 
-    - name: Sign and Notarize
+    - name: Notarize
       uses: indygreg/apple-code-sign-action@v1
       with:
         input_path: dist/whisper_standalone-macos
