@@ -31,7 +31,19 @@ jobs:
     - name: Rename executable with OS suffix
       run: |
         mv dist/whisper_standalone dist/whisper_standalone-macos
-        
+
+    - name: Write cert.p12 from secret
+      run: |
+        echo "${{ secrets.APPLE_CERT_P12_BASE64 }}" | base64 --decode > cert.p12
+    - name: Sign and Notarize
+      uses: indygreg/apple-code-sign-action@v1
+      with:
+        input_path: dist/whisper_standalone-macos
+        p12_file: cert.p12
+        p12_password: ${{ secrets.APPLE_CERT_P12_PASSWORD }}
+        notarize: true
+        staple: true
+
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
       if: github.ref_type == 'tag'
