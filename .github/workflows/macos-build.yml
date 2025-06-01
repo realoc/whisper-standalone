@@ -35,7 +35,5 @@ jobs:
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
       if: github.ref_type == 'tag'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: dist/whisper_standalone-macos

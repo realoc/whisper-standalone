@@ -8,6 +8,8 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout code
@@ -33,7 +35,5 @@ jobs:
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
       if: github.ref_type == 'tag'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: dist/whisper_standalone-windows.exe
