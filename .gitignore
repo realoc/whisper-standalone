@@ -3,3 +3,4 @@ whisper_standalone.exe
 .venv
 build
 .idea
+dist

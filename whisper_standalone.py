@@ -26,6 +26,7 @@ def log_progress(start_time, stop_event):
 
 def main():
     # Parse command-line arguments
+    logging.info("Parsing command-line arguments...")
     parser = argparse.ArgumentParser(description="Transcribe audio file using Whisper")
     parser.add_argument("language", help="Language of the audio (e.g., English, German, Spanish)")
     parser.add_argument("file_path", help="Path to the audio file")
@@ -42,6 +43,7 @@ def main():
         sys.exit(1)
 
     # Load model and transcribe
+    logging.info("Loading model...")
     model = whisper.load_model("turbo")
 
     # Create an event to signal when to stop the timer

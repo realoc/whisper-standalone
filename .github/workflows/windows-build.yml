@@ -36,9 +36,17 @@ jobs:
     - name: Rename executable with OS suffix
       run: |
         Rename-Item -Path "dist\whisper_standalone.exe" -NewName "whisper_standalone-windows.exe"
-        
+
+    - name: Install 7-Zip
+      run: |
+        choco install 7zip -y
+
+    - name: Create ZIP Archive with 7-Zip
+      run: |
+        7z a -tzip "dist\whisper_standalone-windows.zip" "dist\whisper_standalone-windows.exe"
+
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
       if: github.ref_type == 'tag'
       with:
-        files: dist/whisper_standalone-windows.exe
+        files: dist/whisper_standalone-windows.zip
