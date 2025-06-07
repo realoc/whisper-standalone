@@ -43,7 +43,7 @@ jobs:
 
     - name: Create ZIP Archive with 7-Zip
       run: |
-        7z a -tzip "dist\whisper_standalone-windows.zip" "dist\whisper_standalone-windows.exe"
+        cd dist && 7z a -tzip "whisper_standalone-windows.zip" "whisper_standalone-windows.exe"
 
     - name: Create Release Asset
       uses: softprops/action-gh-release@v1
