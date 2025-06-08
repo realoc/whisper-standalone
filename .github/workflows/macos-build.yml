@@ -41,15 +41,16 @@ jobs:
     - name: Write app_store_key.json from secret
       run: |
         echo "${{ secrets.APPLE_APPSTORE_CONNECT_JSON_B64 }}" | base64 --decode > app_store_key.json
-    - name: Sign
-      uses: indygreg/apple-code-sign-action@v1
+
+    - name: Import certificate
+      uses: apple-actions/import-codesign-certs@v3  # Pinned to v3 for security
       with:
-        input_path: dist/whisper_standalone-macos
-        p12_file: cert.p12
-        p12_password: ${{ secrets.APPLE_CERT_P12_PASSWORD }}
-        sign: true
-        notarize: false
-        staple: false
+        p12-file-base64: ${{ secrets.APPLE_CERT_P12_BASE64 }}
+        p12-password: ${{ secrets.APPLE_CERT_P12_PASSWORD }}
+
+    - name: Sign your app
+      run: |
+        codesign --force --options runtime --sign "Developer ID Application: ${{ secrets.APPLE_DEVELOPER_ID }}" dist/whisper_standalone-macos
 
     - name: Verify hardened runtime
       run: |
@@ -58,10 +59,6 @@ jobs:
     - name: Zip signed binary
       run: |
         cd dist && ditto -c -k --sequesterRsrc --keepParent whisper_standalone-macos whisper_standalone-macos.zip
-
-    - name: Verify hardened runtime
-      run: |
-        codesign --display --verbose=4 dist/whisper_standalone-macos.zip
 
     - name: Notarize
       uses: indygreg/apple-code-sign-action@v1
