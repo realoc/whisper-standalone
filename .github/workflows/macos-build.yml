@@ -53,7 +53,7 @@ jobs:
 
     - name: Zip signed binary
       run: |
-        cd dist && zip -r whisper_standalone-macos.zip whisper_standalone-macos
+        cd dist && ditto -c -k --sequesterRsrc --keepParent whisper_standalone-macos whisper_standalone-macos.zip
 
     - name: Notarize
       uses: indygreg/apple-code-sign-action@v1
