@@ -51,9 +51,17 @@ jobs:
         notarize: false
         staple: false
 
+    - name: Verify hardened runtime
+      run: |
+        codesign --display --verbose=4 dist/whisper_standalone-macos
+
     - name: Zip signed binary
       run: |
         cd dist && ditto -c -k --sequesterRsrc --keepParent whisper_standalone-macos whisper_standalone-macos.zip
+
+    - name: Verify hardened runtime
+      run: |
+        codesign --display --verbose=4 dist/whisper_standalone-macos.zip
 
     - name: Notarize
       uses: indygreg/apple-code-sign-action@v1
