@@ -20,5 +20,5 @@ Either absolute or relative e.g. for MacOS `~/Downloads/file-to-transcribe.mp3` 
 ``.\whisper_standalone.exe es C:\Users\YourUserName\Downloads\audio-file-to-transcribe.mp3``
 #### MacOS
 ``
-whisper_standaline-macos es ~/Downloads/audio-file-to-transcribe.mp3
+./whisper_standaline-macos es ~/Downloads/audio-file-to-transcribe.mp3
 ``
